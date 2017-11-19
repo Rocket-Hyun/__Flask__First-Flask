@@ -11,10 +11,10 @@ def allowed_file(filename):
 app = Flask(__name__)
 mysql = MySQL()
 
-app.config['MYSQL_DATABASE_USER'] = 'rocket'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'rockethyun'
-app.config['MYSQL_DATABASE_DB'] = 'mytestdb'
-app.config['MYSQL_DATABASE_HOST'] = 'mytestdb.cpt4wdcgjziv.ap-northeast-2.rds.amazonaws.com'
+app.config['MYSQL_DATABASE_USER'] = ''
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_DB'] = ''
+app.config['MYSQL_DATABASE_HOST'] = ''
 
 mysql.init_app(app)
 
