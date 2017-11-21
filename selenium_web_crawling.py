@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import selenium.webdriver.support.ui as ui
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
+import math
 
 textfile = open("data/users.txt", "r", encoding="utf8")
 users = textfile.read()
@@ -70,16 +71,24 @@ for one in soldiers:
         elif category == "연예":
             news = star
 
-        driver.find_element_by_name("articleTitle").send_keys(news)
-        driver.find_element_by_name("articleText").send_keys(news)
-        driver.find_element_by_name("articlePassword").send_keys("1111")
-        driver.find_element_by_id("sendLetterIcon").click()
+        letter_count = math.floor(len(news.split('/\n')[1]) / 800) + 1
 
-        wait.until(EC.alert_is_present())
+        for i in range(1, letter_count+1):
+            print(i)
+            index_num_front = 800 * (i-1)
+            index_num_back = 800 * i
+            contents = news.split('/\n')[1][index_num_front:index_num_back]
 
-        alert = driver.switch_to.alert
-        alert.accept()
-        wait.until(lambda driver: driver.find_element_by_class_name('glyphicon-envelope'))
+            driver.find_element_by_name("articleTitle").send_keys(news.split('/\n')[0])
+            driver.find_element_by_name("articleText").send_keys(contents)
+            driver.find_element_by_name("articlePassword").send_keys("1111")
+            driver.find_element_by_id("sendLetterIcon").click()
+
+            wait.until(EC.alert_is_present())
+
+            alert = driver.switch_to.alert
+            alert.accept()
+            wait.until(lambda driver: driver.find_element_by_class_name('glyphicon-envelope'))
 
     driver.find_element_by_id("goFriendList").click()
 
